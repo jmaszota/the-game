@@ -15,7 +15,7 @@ public class AfterFightState extends InCityState {
 
         Location heroLocation = this.game.getWorld().getHeroLocation();
 
-        long enemiesCount = heroLocation.getInhabitants().stream().filter(p -> !p.isFriendly() && p.isAlive()).count();
+        long enemiesCount = heroLocation.getInhabitants().stream().filter(ALIVE_ENEMIES).count();
 
         if (enemiesCount > 0) {
             System.out.println(String.format(this.game.getLabel("still_left"), enemiesCount

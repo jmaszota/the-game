@@ -94,6 +94,7 @@ public class PulpFictionGameFactory extends GameFactory {
         dictionary.put("welcome_game","Pulp Fiction main menu. What job do you want to do?");
         dictionary.put("confirm_quit","Are you sure you want to leave? [y/n]");
         dictionary.put("start","Let's drive");
+
         return dictionary;
     }
 

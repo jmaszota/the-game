@@ -20,6 +20,7 @@ public abstract class GameFactory {
         dictionary.put("restore","Restore saved game");
         dictionary.put("save_quite","Save and leave");
         dictionary.put("goto_main_menu","Go to main menu");
+        dictionary.put("you_won","**** Congratulations, you won the game ****");
 
         return dictionary;
     }

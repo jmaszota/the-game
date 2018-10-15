@@ -22,8 +22,8 @@ public class InCityState implements GameState {
         Location heroLocation = this.game.getWorld().getHeroLocation();
         System.out.println(String.format(this.game.getLabel("welcome_to"), heroLocation.getName()));
 
-        long enemiesCount = heroLocation.getInhabitants().stream().filter(p -> !p.isFriendly() && p.isAlive()).count();
-        long friendsCount = heroLocation.getInhabitants().stream().filter(p -> p.isFriendly() && p.isAlive()).count();
+        long enemiesCount = heroLocation.getInhabitants().stream().filter(ALIVE_ENEMIES).count();
+        long friendsCount = heroLocation.getInhabitants().stream().filter(ALIVE_FRIENDS).count();
 
         System.out.println(String.format(this.game.getLabel("inhabitants"), enemiesCount, friendsCount));
         System.out.println("Possible moves:");
@@ -46,14 +46,14 @@ public class InCityState implements GameState {
         } else if ("w".equalsIgnoreCase(action)) {
             travel(null);
         } else if ("f".equalsIgnoreCase(action)) {
-            fight(this.game.getWorld().getHeroLocation().getInhabitants().stream().filter(p -> !p.isFriendly() && p.isAlive()).collect(Collectors.toList()));
+            fight(this.game.getWorld().getHeroLocation().getInhabitants().stream().filter(ALIVE_ENEMIES).collect(Collectors.toList()));
         } else {
             throw new IncorrectCommandException();
         }
     }
 
     @Override
-    public void travel(Location location) {//FIXME?
+    public void travel(Location location) {
         this.game.setState(this.game.getSelectDestinationGameSate());
     }
 
@@ -65,7 +65,7 @@ public class InCityState implements GameState {
             if (heroWins) {
                 System.out.println(String.format(this.game.getLabel("fight_won"), this.game.getHero().getExperience()));
                 //check if anyone is alive
-                if (this.game.getWorld().getHeroLocation().getInhabitants().stream().noneMatch(p -> !p.isFriendly() && p.isAlive()) && this.game.getHeroLocation().equals(this.game.getWorld().getFinishLocation())) {
+                if (isWinningFight()) {
                     this.game.setState(this.game.getGameWonState());
                     return;
                 }
@@ -88,5 +88,9 @@ public class InCityState implements GameState {
     @Override
     public void setGame(Game game) {
         this.game = game;
+    }
+
+    private boolean isWinningFight() {
+        return this.game.getWorld().getHeroLocation().getInhabitants().stream().noneMatch(ALIVE_ENEMIES) && this.game.getHeroLocation().equals(this.game.getWorld().getFinishLocation());
     }
 }

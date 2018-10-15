@@ -13,3 +13,8 @@ _These will be the technical constraints:_
 - Libraries and Frameworks are only allowed for testing and build pipelines
 - Use best in industry agile engineering practices
 - Please build for the command line
+
+_Usage:_
+java -jar game.jar <gametype>
+
+e.g: java -jar game.jar HarryPotter
